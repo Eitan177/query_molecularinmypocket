@@ -24,8 +24,11 @@ def displaydata(dfshow,tablename):
             df = dfshow.pop(0)
             st.write(df)
             #st.write(table_n)
-            st.write(n)
-            pdf_reader('https://www.amp.org/AMP/assets/File/education/MIMP/'+str(table_n)+'.pdf',key=n)
+            showchecked=st.checkbox('show pdf?',key='checked'+n)
+            if showchecked:
+              st.write(n)
+              pdf_reader('https://www.amp.org/AMP/assets/File/education/MIMP/'+str(table_n)+'.pdf',key=n)
+
 
 
 table_to_view=st.selectbox('Select a table', keys_for_tables_uniques)
