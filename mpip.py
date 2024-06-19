@@ -51,6 +51,11 @@ else:
         if key==table_to_view:
             dfshow.append(table)
             tablename.append(key)
-displaydata(dfshow,tablename)        
+
+if len(tablename) > 0:
+  displaydata(dfshow,tablename)   
+else:
+  st.write('nothing found') 
+      
 
 
