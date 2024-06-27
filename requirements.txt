@@ -1,1 +1,2 @@
 streamlit-pdf-reader
+git+https://github.com/LucknowAI/Lucknow-LLM.git
