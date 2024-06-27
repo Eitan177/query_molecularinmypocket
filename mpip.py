@@ -29,7 +29,7 @@ def displaydata(dfshow,tablename):
             showchecked=st.checkbox('show pdf?',key='checked'+n)
             if questionfortable != '':
                 Gemini=GeminiModel(api_key = "AIzaSyCNTVFl431dD9WFGdFrfDmNDmbNlmXzMPo", model_name = "gemini-1.0-pro")
-                argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { df}"
+                argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { df.to_string(index=False)}"
                 model_output = Gemini.generate_content(argumented_prompt)
                 st.write(model_output)
             if showchecked:
