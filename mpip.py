@@ -28,7 +28,7 @@ def displaydata(dfshow,tablename):
             questionfortable=st.text_input('Question about the table? see if gemini can answer-','',key='llm'+n)
             showchecked=st.checkbox('show pdf?',key='checked'+n)
             if questionfortable != '':
-                Gemini = GeminiModel(api_key = userdata.get("AIzaSyCNTVFl431dD9WFGdFrfDmNDmbNlmXzMPo"), model_name = "gemini-1.0-pro")
+                GeminiModel(api_key = "AIzaSyCNTVFl431dD9WFGdFrfDmNDmbNlmXzMPo", model_name = "gemini-1.0-pro")
                 argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : {df}"
                 model_output = Gemini.generate_content(argumented_prompt)
                 st.write(model_output)
