@@ -6,9 +6,15 @@ import numpy as np
 import streamlit as st
 from streamlit_pdf_reader import pdf_reader
 from lucknowllm import GeminiModel
+import random
+
+
 st.set_page_config(layout="wide")
 
-gem_key = st.secrets["api_keys"]["gemini"]
+gem_key1 = st.secrets["api_keys"]["gemini1"]
+gem_key2 = st.secrets["api_keys"]["gemini2"]
+gem_key3 = st.secrets["api_keys"]["gemini3"]
+gem_key4 = st.secrets["api_keys"]["gemini4"]
 
 with open('mpip.pkl', 'rb') as f:
     keys_for_tables,tables = pickle.load(f)
@@ -28,6 +34,7 @@ def displaydata(dfshow,tablename):
             questionfortable=st.text_input('Question about the table? see if gemini can answer-','',key='llm'+n)
             showchecked=st.checkbox('show pdf?',key='checked'+n)
             if questionfortable != '':
+                gem_key=[gem_key1, gem_key2, gem_key3, gem_key4[random.randint(0, 3)] 
                 Gemini=GeminiModel(api_key = gem_key, model_name = "gemini-1.0-pro")
                 argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { df.to_string(index=False)}"
                 model_output = Gemini.generate_content(argumented_prompt)
