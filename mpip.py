@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 import streamlit as st
 from streamlit_pdf_reader import pdf_reader
+from lucknowllm import GeminiModel
 st.set_page_config(layout="wide")
 
 
@@ -24,7 +25,13 @@ def displaydata(dfshow,tablename):
             df = dfshow.pop(0)
             st.write(df)
             #st.write(table_n)
+            questionfortable=st.text_input('Question about the table? see if gemini can answer-','')
             showchecked=st.checkbox('show pdf?',key='checked'+n)
+            if questionfortable != '':
+                Gemini = GeminiModel(api_key = userdata.get("AIzaSyCNTVFl431dD9WFGdFrfDmNDmbNlmXzMPo"), model_name = "gemini-1.0-pro")
+                argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : {df}"
+                model_output = Gemini.generate_content(argumented_prompt)
+                st.write(model_output)
             if showchecked:
               st.write(n)
               pdf_reader('https://www.amp.org/AMP/assets/File/education/MIMP/'+str(table_n)+'.pdf',key=n)
