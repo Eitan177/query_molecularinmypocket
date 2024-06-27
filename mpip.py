@@ -25,7 +25,7 @@ def displaydata(dfshow,tablename):
             df = dfshow.pop(0)
             st.write(df)
             #st.write(table_n)
-            questionfortable=st.text_input('Question about the table? see if gemini can answer-','')
+            questionfortable=st.text_input('Question about the table? see if gemini can answer-','',key='llm'+n)
             showchecked=st.checkbox('show pdf?',key='checked'+n)
             if questionfortable != '':
                 Gemini = GeminiModel(api_key = userdata.get("AIzaSyCNTVFl431dD9WFGdFrfDmNDmbNlmXzMPo"), model_name = "gemini-1.0-pro")
