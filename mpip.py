@@ -15,6 +15,8 @@ gem_key1 = st.secrets["api_keys"]["gemini1"]
 gem_key2 = st.secrets["api_keys"]["gemini2"]
 gem_key3 = st.secrets["api_keys"]["gemini3"]
 gem_key4 = st.secrets["api_keys"]["gemini4"]
+gem_key5 = st.secrets["api_keys"]["gemini5"]
+gem_key6 = st.secrets["api_keys"]["gemini6"]
 
 with open('mpip.pkl', 'rb') as f:
     keys_for_tables,tables = pickle.load(f)
@@ -26,19 +28,28 @@ def displaydata(dfshow,tablename):
     maketab=np.arange(0,len(dfshow)).astype(str).tolist()
     maketab=['Table '+str(i[0])+' '+str(i[1]) for i in zip(maketab,tablename) ]
     tabs = st.tabs(maketab)
-    for i,n,table_n in zip(tabs,maketab,tablename):
+    for indexshow,(i,n,table_n) in enumerate(zip(tabs,maketab,tablename)):
         with i:
-            df = dfshow.pop(0)
+            df = dfshow[indexshow]
             st.write(df)
             #st.write(table_n)
             questionfortable=st.text_input('Question about the table? see if gemini can answer-','',key='llm'+n)
+            alltableq = st.radio('aski gemini this question for every table from the current query result ('+str(len(dfshow))+' tables)',[False,True])
             showchecked=st.checkbox('show pdf?',key='checked'+n)
-            if questionfortable != '':
-                gem_key=[gem_key1, gem_key2, gem_key3, gem_key4][random.randint(0, 3)] 
+            if questionfortable != '' and alltableq:
+                gem_key=[gem_key1, gem_key2, gem_key3, gem_key4,gem_key5,gem_key6][random.randint(0, 5)] 
+                Gemini=GeminiModel(api_key = gem_key, model_name = "gemini-1.0-pro")
+                for j,current_df in enumerate(dfshow):
+                    argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { current_df.to_string(index=False)}"
+                    model_output = Gemini.generate_content(argumented_prompt)
+                    st.write('Answer using table '+str(j))
+                    st.write(model_output)
+            elif: questionfortable !='':
+                gem_key=[gem_key1, gem_key2, gem_key3, gem_key4,gem_key5,gem_key6][random.randint(0, 5)] 
                 Gemini=GeminiModel(api_key = gem_key, model_name = "gemini-1.0-pro")
                 argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { df.to_string(index=False)}"
                 model_output = Gemini.generate_content(argumented_prompt)
-                st.write(model_output)
+                st.write(model_output)                
             if showchecked:
               st.write(n)
               pdf_reader('https://www.amp.org/AMP/assets/File/education/MIMP/'+str(table_n)+'.pdf',key=n)
