@@ -34,12 +34,13 @@ def displaydata(dfshow,tablename):
             st.write(df)
             #st.write(table_n)
             questionfortable=st.text_input('Question about the table? see if gemini can answer-','',key='llm'+n)
-            alltableq = st.radio('aski gemini this question for every table from the current query result ('+str(len(dfshow))+' tables)',[False,True],key='tables'+n)
+            alltableq = st.radio('aski gemini this question for every table from the current query result ('+str(len(dfshow))+' tables)',['All tables in the tabs above','Just the table shown in the tab above'],key='tables'+n)
             showchecked=st.checkbox('show pdf?',key='checked'+n)
-            if questionfortable != '' and alltableq:
-                gem_key=[gem_key1, gem_key2, gem_key3, gem_key4,gem_key5,gem_key6][random.randint(0, 5)] 
-                Gemini=GeminiModel(api_key = gem_key, model_name = "gemini-1.0-pro")
+            if questionfortable != '' and alltableq=='All tables in the tabs above':
+
                 for j,current_df in enumerate(dfshow):
+                    gem_key=[gem_key1, gem_key2, gem_key3, gem_key4,gem_key5,gem_key6][random.randint(0, 5)] 
+                    Gemini=GeminiModel(api_key = gem_key, model_name = "gemini-1.0-pro")
                     argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { current_df.to_string(index=False)}"
                     model_output = Gemini.generate_content(argumented_prompt)
                     st.write('Answer using table '+str(j))
