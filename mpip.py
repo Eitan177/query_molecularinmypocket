@@ -34,7 +34,7 @@ def displaydata(dfshow,tablename):
             st.write(df)
             #st.write(table_n)
             questionfortable=st.text_input('Question about the table? see if gemini can answer-','',key='llm'+n)
-            alltableq = st.radio('aski gemini this question for every table from the current query result ('+str(len(dfshow))+' tables)',[False,True])
+            alltableq = st.radio('aski gemini this question for every table from the current query result ('+str(len(dfshow))+' tables)',[False,True],key='tables'+n)
             showchecked=st.checkbox('show pdf?',key='checked'+n)
             if questionfortable != '' and alltableq:
                 gem_key=[gem_key1, gem_key2, gem_key3, gem_key4,gem_key5,gem_key6][random.randint(0, 5)] 
