@@ -44,7 +44,7 @@ def displaydata(dfshow,tablename):
                     model_output = Gemini.generate_content(argumented_prompt)
                     st.write('Answer using table '+str(j))
                     st.write(model_output)
-            elif: questionfortable !='':
+            elif questionfortable !='':
                 gem_key=[gem_key1, gem_key2, gem_key3, gem_key4,gem_key5,gem_key6][random.randint(0, 5)] 
                 Gemini=GeminiModel(api_key = gem_key, model_name = "gemini-1.0-pro")
                 argumented_prompt = f"You are an expert question answering system, I'll give you question and context and you'll return the answer. Query : {questionfortable} Contexts : { df.to_string(index=False)}"
